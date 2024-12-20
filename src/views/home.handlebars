@@ -1,0 +1,19 @@
+<div>
+    {{#if error}}
+        <ul>
+            <li>
+                <p style="color: red; font-weight: bold;">{{error}}</p>
+            </li>
+        </ul>
+    {{else}}
+        <h1>Bienvenido!</h1>
+        <ul>
+            <li>
+                <h1>{{user.first_name}} {{user.last_name}}</h1>
+                <p>Email: {{user.email}}</p>
+                <p>Age: {{user.age}}</p>
+                <p>Role: {{user.role}}</p>
+            </li>
+        </ul>
+    {{/if}}
+</div>
