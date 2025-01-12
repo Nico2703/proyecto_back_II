@@ -6,8 +6,8 @@ import dotenv from 'dotenv';
 import passport from 'passport';
 dotenv.config();
 
-const PRIVATE_KEY = process.env.PRIVATE_KEY_JWT || 'secretKey';
-const EXPIRES_TIME_TOKEN = process.env.EXPIRES_TIME_TOKEN || '1h';
+const PRIVATE_KEY = process.env.PRIVATE_KEY_JWT;
+const EXPIRES_TIME_TOKEN = process.env.EXPIRES_TIME_TOKEN;
 
 const __filename = fileURLToPath(import.meta.url);
 export const __dirname = dirname(__filename)
@@ -26,7 +26,7 @@ export const passportCall = (strategy) => {
         if (err) return next(err);
         if (!user) {
             //return res.status(401).send({ error: info.messages ? info.messages : info.toString() });
-            return res.render('home', { user: null, error: info.messages || info.toString() });
+            return res.render('error', { user: null, error: info.messages || info.toString() });
         }
         req.user = user;
         next();

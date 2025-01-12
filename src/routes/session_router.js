@@ -39,7 +39,12 @@ router.post('/login', async (req,res) =>{
         }
 
         const jwt_token = generateToken({ user: user });
-        res.cookie('currentUser', jwt_token, { httpOnly: true}); 
+        res.cookie('currentUser', jwt_token, { 
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'produccion', 
+            maxAge: 3600000,         
+            sameSite: 'Strict',      
+        }); 
         //res.json({ message: 'Inicio de sesión exitoso' }); 
         res.render('messages', { message: 'Inicio de sesión exitoso' });
     } catch (error) {

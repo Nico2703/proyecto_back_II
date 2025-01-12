@@ -87,4 +87,29 @@ input{
     font-size: small;
 }
 
-
+.error-container {
+    justify-self: center;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 40px;
+}
+.error-container img {
+    width: 300px;
+    height: 200px;
+    margin: 10px;
+    border-radius: 5px;
+}
+.back-button {
+    display: inline-block;
+    margin: 20px;
+    padding: 10px;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.back-button:hover {
+    background-color: #2980b9;
+}
