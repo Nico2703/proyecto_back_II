@@ -12,15 +12,15 @@ router.post('/register', async (req, res) =>{
         const userExists = await User.findOne({ email });
         if (userExists) {
         //return res.status(400).json({ message: 'Usuario existente' });
-        return res.render('messages', { message: 'Usuario existente' });
+        return res.render('messages&error', { message: 'Usuario existente' });
         }
         const newUser = new User({ first_name, last_name, email, age, password });
         await newUser.save();
         //res.status(201).json({ message: 'Usuario creado correctamente' });
-        res.render('messages', { message: 'Usuario creado correctamente' });
+        res.render('messages&error', { messageOK: 'Usuario creado correctamente' });
     } catch (error) {
         //res.status(500).json({ message: 'Error al crear el usuario' });
-        return res.render('messages', { message: 'Error al crear el usuario' });
+        return res.render('messages&error', { message: 'Error al crear el usuario' });
     }
 });
 
@@ -30,12 +30,12 @@ router.post('/login', async (req,res) =>{
         const user = await User.findOne({ email });
         if (!user) {
         //return res.status(400).json({ message: 'Credenciales inválidas - Usuario no encontrado' });
-        return res.render('messages', { message: 'Credenciales inválidas - Usuario no encontrado' });
+        return res.render('messages&error', { message: 'Credenciales inválidas - Usuario no encontrado' });
         }
 
         if (!isValidPassword(user, password)) {
             //return res.status(400).json({ message: 'Credenciales inválidas - Contraseña incorrecta' });
-            return res.render('messages', { message: 'Credenciales inválidas - Contraseña incorrecta' });
+            return res.render('messages&error', { message: 'Credenciales inválidas - Contraseña incorrecta' });
         }
 
         const jwt_token = generateToken({ user: user });
@@ -46,9 +46,9 @@ router.post('/login', async (req,res) =>{
             sameSite: 'Strict',      
         }); 
         //res.json({ message: 'Inicio de sesión exitoso' }); 
-        res.render('messages', { message: 'Inicio de sesión exitoso' });
+        res.render('messages&error', { messageOK: 'Inicio de sesión exitoso' });
     } catch (error) {
-        return res.render('messages', { message: 'Error al iniciar sesión' });
+        return res.render('messages&error', { message: 'Error al iniciar sesión' });
         //res.status(500).json({ message: 'Error al iniciar sesión' });
     }
 });

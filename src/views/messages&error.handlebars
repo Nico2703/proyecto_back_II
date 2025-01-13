@@ -1,0 +1,27 @@
+<div class="error-container">
+    {{#if error}}
+    <img src="/assets/img/error.png" alt="Error" />
+    <ul>
+        <li style=" border: 2px solid red;
+                    color:red;">
+            <p>{{error}}</p>
+        </li>
+    </ul>
+    {{else if message}}
+    <ul>
+        <li style=" border: 2px solid red;
+                    color:red;">
+            <p>{{message}}</p>
+        </li>
+    </ul>
+    {{else if messageOK}}
+    <ul>
+        <li style=" border: 2px solid green;
+                    color:green;">
+            <p>{{messageOK}}</p>
+        </li>
+    </ul>
+    {{/if}}
+
+    <a href="/login" class="back-button">Volver</a>
+</div>

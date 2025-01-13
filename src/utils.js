@@ -26,7 +26,7 @@ export const passportCall = (strategy) => {
         if (err) return next(err);
         if (!user) {
             //return res.status(401).send({ error: info.messages ? info.messages : info.toString() });
-            return res.render('error', { user: null, error: info.messages || info.toString() });
+            return res.render('messages&error', { user: null, error: info.messages || info.toString() });
         }
         req.user = user;
         next();
@@ -37,10 +37,10 @@ export const passportCall = (strategy) => {
 export const authorization = (role) => {
     return async (req, res, next) => {
         //if(!req.user) return res.status(401).send({ message: 'Sin autorización' });
-        if(!req.user) return res.render('home', { user: null, error: 'Sin autorización' });
+        if(!req.user) return res.render('messages&error', { user: null, error: 'Sin autorización' });
         if(req.user.user.role != role) 
         //return res.status(403).send({ error: "Sin permisos" });
-        return res.render('home', { user: null, error: 'Sin permisos' });
+        return res.render('messages&error', { user: null, error: 'Sin permisos' });
         next();
     }
 };
