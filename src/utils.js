@@ -25,22 +25,10 @@ export const passportCall = (strategy) => {
     passport.authenticate(strategy, function(err, user, info) {
         if (err) return next(err);
         if (!user) {
-            //return res.status(401).send({ error: info.messages ? info.messages : info.toString() });
-            return res.render('messages&error', { user: null, error: info.messages || info.toString() });
+            return res.render('messages&error', { user: null, error: "Usuario no autenticado" });
         }
         req.user = user;
         next();
     })(req, res, next);
 };
-};
-
-export const authorization = (role) => {
-    return async (req, res, next) => {
-        //if(!req.user) return res.status(401).send({ message: 'Sin autorización' });
-        if(!req.user) return res.render('messages&error', { user: null, error: 'Sin autorización' });
-        if(req.user.user.role != role) 
-        //return res.status(403).send({ error: "Sin permisos" });
-        return res.render('messages&error', { user: null, error: 'Sin permisos' });
-        next();
-    }
 };

@@ -9,6 +9,7 @@ import handlebars from 'express-handlebars';
 
 import sessionRouter from './routes/session_router.js';
 import viewsRouter from './routes/views_router.js';
+import cartRouter from './routes/cart_router.js';
 
 const MONGO_URL = process.env.MONGO_URL;
 
@@ -34,6 +35,7 @@ mongoose.connect( MONGO_URL, {
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', viewsRouter);
+app.use('/', cartRouter);
 app.use('/api/sessions', sessionRouter);
 
 app.listen(8080, () => {

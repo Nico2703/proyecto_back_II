@@ -70,7 +70,7 @@ input{
 }
 
 #boton{
-    width: 30%;
+    padding: 5px 10px;
     align-self: center;
     margin-top: 20px;
 }
