@@ -18,7 +18,6 @@ export const saveUser = async (req, res) => {
     const { first_name, last_name, email, age, password } = req.body;
     try {
         const newUser = { first_name, last_name, email, age, password };
-        console.log("En controller OK");
         const result = await userService.saveUser(newUser);
         if (result) {
             res.render('messages&error', { messageOK: 'Usuario creado correctamente' });
