@@ -1,6 +1,6 @@
 import { cartService } from '../repositories/index.js';
 
-export const getAll = async (req, res, next) => {
+export const getAllFront = async (req, res, next) => {
     try {
         const response = await cartService.getAll();
         const carts = response.map(cart => {
@@ -25,6 +25,15 @@ export const getAll = async (req, res, next) => {
             };
         });
         res.render('carts', { carts });
+    } catch (error) {
+        next(error);  
+    }
+};
+
+export const getAll = async (req, res, next) => {
+    try {
+        const response = await cartService.getAll();
+        res.json(response);
     } catch (error) {
         next(error);  
     }

@@ -1,18 +1,20 @@
 import { Router } from "express";
-import { authorization } from '../middleware/authorization.js';
 import { passportCall } from '../utils.js';
-import { getAll, getById, create, update, remove } from '../controllers/product_controller.js';
+import { authorization } from '../middleware/authorization.js';
+import { getAllFront, getAll, getById, create, update, remove } from '../controllers/product_controller.js';
 
 const router = Router();
 
-router.get('/products', passportCall('jwt'), authorization("admin"), getAll);
+router.get('/products', getAllFront);
+
+router.get('/', getAll);
 
 router.get('/:pid', getById);
 
-router.post('/', create);
+router.post('/', passportCall('jwt'), authorization("admin"), create);
 
-router.put('/:pid', update);
+router.put('/:pid', passportCall('jwt'), authorization("admin"), update);
 
-router.delete('/:pid', remove);
+router.delete('/:pid', passportCall('jwt'), authorization("admin"), remove);
 
 export default router;

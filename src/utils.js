@@ -25,7 +25,7 @@ export const passportCall = (strategy) => {
     passport.authenticate(strategy, function(err, user, info) {
         if (err) return next(err);
         if (!user) {
-            return res.render('messages&error', { user: null, error: "Usuario no autenticado" });
+            return res.status(401).render('messages&error', { user: null, error: "Usuario no autenticado" });
         }
         req.user = user;
         next();

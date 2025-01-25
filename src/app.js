@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import passport from 'passport';
 import initializePassport from './config/passport_config.js';
 import handlebars from 'express-handlebars';
+import cors from 'cors';
 
 import sessionRouter from './routes/session_router.js';
 import viewsRouter from './routes/views_router.js';
@@ -15,6 +16,10 @@ import productRouter from './routes/product_router.js';
 const MONGO_URL = process.env.MONGO_URL;
 
 const app = express();
+
+app.use(cors({
+    origin: '*',  
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -1,6 +1,6 @@
 import { productService } from '../repositories/index.js';
 
-export const getAll = async (req, res, next) => {
+export const getAllFront = async (req, res, next) => {
     try {
         const limit = parseInt(req.query.limit) || 3;
         const page = parseInt(req.query.page) || 1;
@@ -18,6 +18,27 @@ export const getAll = async (req, res, next) => {
             };
         });
         res.render('products', { products, prodPag });
+    } catch (error) {
+        next(error);  
+    }
+};
+
+export const getAll = async (req, res, next) => {
+    try {
+        const { limit, page, category, sort } = req.query;
+        const response = await productService.getAll(limit, page, category, sort);
+        res.json({
+            status: response.status,
+            payload: response.docs,
+            totalPages: response.totalPages,
+            prevPage: response.prevPage,
+            nextPage: response.nextPage,
+            page: response.page,
+            hasPrevPage: response.hasPrevPage,
+            hasNextPage: response.hasNextPage,
+            prevLink: response.hasPrevPage ? `http://localhost:8080/api/products?limit=${response.limit}&page=${response.prevPage}` : null,
+            nextLink: response.hasNextPage ? `http://localhost:8080/api/products?limit=${response.limit}&page=${response.nextPage}` : null,
+        });
     } catch (error) {
         next(error);  
     }
