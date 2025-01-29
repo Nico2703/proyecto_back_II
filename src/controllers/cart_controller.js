@@ -1,4 +1,5 @@
-import { cartService } from '../repositories/index.js';
+import { cartService, productService } from '../repositories/index.js';
+import Ticket from '../models/ticket_model.js';
 
 export const getAllFront = async (req, res, next) => {
     try {
@@ -100,3 +101,45 @@ export const removeAllProductsFromCart = async (req, res, next) => {
         next(error);
     }
 };
+
+export const ticketCreate = async (req, res) => {
+    const { cid } = req.params;
+    const purchaserEmail = req.user.user.email;
+    try {
+        const cart = await cartService.getById(cid);
+
+        if (!cart) {
+            return res.render('messages&error', { message: 'Carrito no encontrado' });
+        }
+    
+        const noStockProducts = [];
+        let totalAmount = 0;
+
+        for (const product of cart.products) {
+            const productInStock = await productService.getById(product._id); 
+            
+            if (productInStock.stock >= product.quantity) {
+                productInStock.stock -= product.quantity;
+                await productInStock.save();
+
+                totalAmount += productInStock.price * product.quantity;
+            } else {
+                noStockProducts.push(product._id);
+            }
+        }
+
+        if (noStockProducts.length > 0) {
+            return res.json({ message: `Productos no procesados por falta de stock: ${noStockProducts.join(', ')}` });
+        }
+
+        const newTicket = new Ticket({ 
+            amount: totalAmount,
+            purchaser: purchaserEmail,
+        });
+        await newTicket.save();
+
+        res.render('messages&error', { messageOK: 'Ticket creado correctamente' });
+    } catch (error) {
+        return res.render('messages&error', { message: 'Error al crear el ticket de compra' });
+    }
+}

@@ -45,7 +45,7 @@ export default class Cart{
 
     updateCartProduct = async (cid, pid, obj) => {
         try{    
-            let cart = await cartModel.getById(cid);
+            let cart = await cartModel.findById(cid);
 
             const quantityToAdd = obj.quantity ? Number(obj.quantity) : 1;
             
@@ -74,7 +74,7 @@ export default class Cart{
 
     deleteAllProductsFromCart = async (cid) => {
         try{
-            return await car.findByIdAndUpdate(cid, { products: [] }, { new: true });
+            return await cartModel.findByIdAndUpdate(cid, { products: [] }, { new: true });
         } catch (error){
             throw new Error(error);
         }

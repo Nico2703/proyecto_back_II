@@ -2,8 +2,7 @@ import { Router }  from 'express';
 import { authorization } from '../middleware/authorization.js';
 import { passportCall } from '../utils.js';
 import { getAllFront, getAll, getById, create, updateCart, updateCartProduct, 
-        removeProductFromCart, removeAllProductsFromCart } from '../controllers/cart_controller.js';
-import { ticketCreate } from '../controllers/ticket_controller.js';
+        removeProductFromCart, removeAllProductsFromCart, ticketCreate } from '../controllers/cart_controller.js';
 
 const router = Router();
 
@@ -15,7 +14,7 @@ router.get('/', getAll);
 
 router.get('/:cid', getById);
 
-router.post('/', create);
+router.post('/', passportCall('jwt'), authorization("user"), create);
 
 router.put('/:cid/products/:pid', passportCall('jwt'), authorization("user"), updateCartProduct);
 
